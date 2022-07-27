@@ -30,7 +30,7 @@ class AzContributeBlock extends BlockBase {
         '#theme' => 'block_contribute',
         '#attributes' => ['class' => ['block-border', 'contribute-block']],
         '#description' => $node->field_contribute->value,
-        '#more_url' => \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$node->id()),
+        '#more_url' => \Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$node->id()),
       ];
     }
   }

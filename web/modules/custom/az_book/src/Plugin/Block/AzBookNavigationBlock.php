@@ -209,7 +209,7 @@ class AzBookNavigationBlock extends BookNavigationBlock {
       $build = [
         '#theme' => 'az_book_navigation',
         '#book_title' => $results[$bid]->title,
-        '#book_url' => \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$bid),
+        '#book_url' => \Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$bid),
         '#book_id' => $bid,
         '#book_pages' => $this->buildMenuRecursive($results, $bid, 1),
         '#attributes' => ['class' => ['item-top']],
@@ -218,7 +218,7 @@ class AzBookNavigationBlock extends BookNavigationBlock {
 
       // If this is a group page.
       if (!empty($group)) {
-        $build['#group_url'] = \Drupal::service('path.alias_manager')->getAliasByPath('/group/' . $group->id());
+        $build['#group_url'] = \Drupal::service('path_alias.manager')->getAliasByPath('/group/' . $group->id());
         $build['#group_name'] = $group->label->value;
         $build['#group_id'] = $group->id();
         $logo = $group->field_logo_image->getValue();

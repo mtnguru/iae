@@ -52,7 +52,7 @@ class AzDonateBlock extends BlockBase {
           '#theme' => 'block_donate',
           '#attributes' => ['class' => ['donate-block', 'block-border']],
           '#description' => $node->body->value,
-          '#more_url' => \Drupal::service('path.alias_manager')->getAliasByPath('/node/'.$node->id()),
+          '#more_url' => \Drupal::service('path_alias.manager')->getAliasByPath('/node/'.$node->id()),
         ];
       }
     }

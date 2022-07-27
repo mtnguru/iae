@@ -150,7 +150,7 @@ class WysiwygFilter extends FilterBase {
                   } else {
                     $title = 'Wassup doc';
                   }
-                  $alias = \Drupal::service('path.alias_manager')->getAliasByPath(\Drupal::service('path.current')->getPath());
+                  $alias = \Drupal::service('path_alias.manager')->getAliasByPath(\Drupal::service('path.current')->getPath());
                   \Drupal::logger('my_module')->notice('Topic not found: ' . $name . '  Title: ' . $title . '  Path: ' .  $alias);
                 }
               }

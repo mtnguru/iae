@@ -45,7 +45,7 @@ class WysiwygBase {
     $results = $query->execute()->fetchAllAssoc('title');
     // Build terms array.
     foreach ($results as $result) {
-      $result->url = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $result->nid);
+      $result->url = \Drupal::service('path_alias.manager')->getAliasByPath('/node/' . $result->nid);
       $glossary[strtolower($result->title)] = $result;
     }
     return $glossary;
