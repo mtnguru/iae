@@ -19,7 +19,7 @@ $color-light-purple: #BBAAFF;
 $color-purple-red: #A682FF;
 $color-purple: #5533CC;
 $color-dark-purple-red: #330055;
-$color-dark-purple: #203050;
+$color-dark-purple: #1a2035;
 $color-tan: #BFA292;
 $color-dark-brown: #20100A;
 
@@ -70,7 +70,6 @@ $transparent-captions-color: rgba($color-white, 0.56);
 $accent-line-color: $color-purple;
 
 // Headers
-$header-background: $color-blue;
 $header-background: $color-purple;
 $header-color: $color-light-turquoise;
 
@@ -81,7 +80,8 @@ $topnav-color: $color-light-turquoise;
 // Base colors.
 $base-background-color: $color-dark-purple !default;
 $base-font-color: $color-white !default;
-$secondary-background-color: darken($base-background-color, 7.5%);
+$base2-background-color: lighten($base-background-color, 3%);
+$base3-background-color: lighten($base-background-color, 6%);
 
 $border-color-base: darken($color-purple, 40%);
 $border-color-hover: darken($color-purple, 20%);

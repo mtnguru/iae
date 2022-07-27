@@ -84,7 +84,7 @@
         padding: 3px;
 
         &.menu-item--active {
-          background-color: $secondary-background-color;
+          background-color: $base2-background-color;
         }
       }
     }
@@ -245,7 +245,7 @@
 
     &.menu-item--active {
       > a {
-        background-color: $secondary-background-color;
+        background-color: $base2-background-color;
       }
     }
   }

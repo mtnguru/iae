@@ -158,8 +158,8 @@ nav.az-tabs {
       letter-spacing: -0.02em;
 
       &.active {
-        background-color: $secondary-background-color;
-        border-bottom: 2px solid $secondary-background-color;
+        background-color: $base2-background-color;
+        border-bottom: 2px solid $base2-background-color;
       }
 
       &:hover {
@@ -169,7 +169,7 @@ nav.az-tabs {
   }
 
   .az-pages {
-    background: $secondary-background-color;
+    background: $base2-background-color;
     border: 2px solid $base-separator-color;
     padding: 10px 15px;
     border-bottom-left-radius: 8px;

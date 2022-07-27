@@ -208,6 +208,10 @@ function az_content_preprocess_comment(&$variables) {
  * @param $variables
  */
 function az_content_preprocess_page(&$variables) {
+  if (\Drupal::service('path.matcher')->isFrontPage()) {
+    $node = $variables['node'];
+    _az_content_create_home($node, $variables);
+  }
   return;
 }
 
@@ -533,11 +537,11 @@ function _az_content_add_query_args($set) {
   return $set;
 }
 
-function _az_content_add_SAM_tm(&$text) {
-  $text = preg_replace('/\bSAM\b/', '<span class="sam-tm">SAM</span>', $text, -1, $count);
-  $text = preg_replace('/Structured Atom Model/', '<span class="sam-tm">Structured Atom Model</span>', $text, -1, $count);
-  $text = preg_replace('/\bAtomizer\b/', '<span class="sam-tm">Atomizer</span>', $text, -1, $count);
-}
+//function _az_content_add_SAM_tm(&$text) {
+//  $text = preg_replace('/\bSAM\b/', '<span class="sam-tm">SAM</span>', $text, -1, $count);
+//  $text = preg_replace('/Structured Atom Model/', '<span class="sam-tm">Structured Atom Model</span>', $text, -1, $count);
+//  $text = preg_replace('/\bAtomizer\b/', '<span class="sam-tm">Atomizer</span>', $text, -1, $count);
+//}
 
 /**
  * Implements HOOK_preprocess_node().
@@ -598,100 +602,18 @@ function az_content_preprocess_node(&$variables) {
     case 'article':
     case 'book':
     case 'news':
-    case 'page':
     case 'event':
     case 'ticket':
     case 'glossary':
-
-      _az_content_add_SAM_tm($variables['content']['body'][0]['#text']);
-      $title = $node->title->value;
-      _az_content_add_SAM_tm($title);
-      $variables['title'] = ['#markup' => $title];
-
-      if ($viewMode == 'teaser') {
-        _az_content_add_group_logo($node, $variables);
-      }
-
-      if ($viewMode == 'full') {
-        // Add block showing any tickets submitted for this page.
-        if (\Drupal::currentUser()->hasPermission('az content view tickets')) {
-          $tickets = [
-            'type' => 'entity-stream',
-            'id' => 'related-tickets',
-            'title' => 'Tickets',
-            'viewMode' => 'teaser_short',
-            'types' => 'ticket',
-            'pages' => $node->id(),
-            'class' => 'block-border',
-            'empty' => 'NO DISPLAY',
-          ];
-        }
-
-        /*
-        // Create book navigation block
-        if (in_array($type, ['article', 'glossary', 'news', 'book'])) {
-          $block_entity = Drupal\block\Entity\Block::load('azbooknavigation');
-          $variables['sidebar']['block_booknavigation'] = \Drupal::entityTypeManager()
-            ->getViewBuilder('block')
-            ->view($block_entity);
-        }
-
-        // If field_contribute has content - add contribute block
-        if ($node->hasField('field_contribute') && !$node->field_contribute->isEmpty()) {
-          $block_entity = Drupal\block\Entity\Block::load('azcontributeblock');
-          $variables['sidebar']['block_contribute'] = \Drupal::entityTypeManager()
-            ->getViewBuilder('block')
-            ->view($block_entity);
-        }
-
-        // If field_display_image_map has a value then add the map views map block.
-        if ($node->hasField('field_display_image_map') && $node->field_display_image_map->value == true) {
-          $block_entity = Drupal\block\Entity\Block::load('views_block__az_media_block_map_usage');
-          $variables['sidebar']['block_views_image_map'] = \Drupal::entityTypeManager()
-            ->getViewBuilder('block')
-            ->view($block_entity);
-        }
-
-        // Create sidebar block of recent activity for the same topic.
-        $tids = null;
-        if ($type == 'glossary') {
-          $tids = $node->id();
-        } else {
-          if ($node->hasField('field_topics')) {
-            foreach ($node->field_topics->getValue() as $topic) {
-              $tids[] = $topic['target_id'];
-            };
-          }
-        }
-        if (!empty($tids)) {
-          $variables['sidebar']['related'] = _az_content_build_block('related-content', [
-            'type' => 'entity-stream',
-            'id' => 'related-content',
-            'status' => NODE_PUBLISHED,
-            'title' => 'Related Content',
-            'viewMode' => 'teaser_short',
-            'exclude' => $node->id(),
-            'topics' => $tids,
-            'class' => 'block-border',
-            'empty' => 'NO DISPLAY'
-          ]);
-        }
-        */
-
-        // Add the Donate block.
-//      $block_entity = Drupal\block\Entity\Block::load('azdonateblock');
-//      $variables['sidebar']['block_donate'] =
-//        \Drupal::entityTypeManager()->getViewBuilder('block')->view($block_entity);
-      }
       break;
 
     case 'landing_page':
 
       // Dashboard - Front page
       if (\Drupal::service('path.matcher')->isFrontPage()) { _az_content_create_home($node, $variables); } // Home page
-      if ($node->id() == 311)  { _az_content_create_dashboard($node, $variables); }                         // User Dashboard
-//    if ($node->id() == 799)  { _az_content_create_dashboard($node, $variables); }                         // User Dashboard
-      if ($node->id() == 585)  { _az_content_create_upcoming_events($node, $variables); }                   // Upcoming events
+      break;
+
+    case 'page':
       break;
 
     case 'atom':
@@ -708,11 +630,22 @@ function az_content_preprocess_node(&$variables) {
       }
       break;
   }
+}
 
-  if ($node->id() == "424") {
-    _az_content_group_status_page($node, $variables);
-    _az_content_safire_block($node, $variables);
-  }
+function _az_content_create_home($node, &$variables) {
+  $variables['birkeland'] = _az_content_render_node(24, 'full');
+  $variables['platonic'] = _az_content_render_node(19, 'full');
+  $variables['platonicduals'] = _az_content_render_node(21, 'full');
+}
+
+/**
+ * @param array $build
+ * @param \Drupal\node\NodeInterface $node
+ * @param $display
+ * @param $view_mode
+ */
+function az_content_node_view(array &$build, EntityInterface $entity, $display, $view_mode) {
+  $build['#cache']['max-age'] = 0;  // Turn off caching on nodes
 }
 
 /**
@@ -724,18 +657,6 @@ function az_content_preprocess_node(&$variables) {
  * @param $node
  * @param $variables
  */
-function _az_content_group_status_page($node, &$variables) {
-/*function another ($word) {
-  }
-
-  // Rethink this  - do I really want a menu showing - maybe we just talk about it? Do I want to maintain a page like that?
-  //
-  // Read in the book menu
-  // Create hierarchical menu - this could be done in a template - like I did for the real menu.
-
-  another('fart'); */
-  return;
-}
 
 /**
  * Given a node id and view mode - render the content of that node.
@@ -745,13 +666,13 @@ function _az_content_group_status_page($node, &$variables) {
  * @return array
  */
 function _az_content_render_node($nid, $viewMode = 'full') {
-  $node = \Drupal::entityManager()->getStorage('node')->load($nid);
-  $body = $node->body->value;
-  _az_content_add_SAM_tm($body);
-  $node->body->setValue([
-    'value' => $body,
-    'format' => $node->body->format,
-  ]);
+  $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+//$body = $node->body->value;
+//_az_content_add_SAM_tm($body);
+//$node->body->setValue([
+//  'value' => $body,
+//  'format' => $node->body->format,
+//]);
   return \Drupal::entityTypeManager()->getViewBuilder('node')->view($node, $viewMode);
 }
 
@@ -771,31 +692,6 @@ function _az_content_wrap_block($title, $content) {
     ];
   }
   return $build;
-}
-
-function _az_content_create_home($node, &$variables) {
-
-  $variables['snippet_home_em']          = _az_content_render_node(377, 'full');
-  $variables['snippet_home_welcome']     = _az_content_wrap_block('Welcome back', _az_content_render_node(482, 'full'));
-  $variables['snippet_home_login']       = _az_content_wrap_block(null, _az_content_render_node(481, 'full'));
-  $variables['snippet_home_communities'] = _az_content_render_node(479, 'full');
-  $variables['snippet_home_birkeland']   = _az_content_render_node(3081, 'full');
-
-  // Get view with active communities
-  $variables['view_home_communities'] = views_embed_view('az_groups', 'block_communities');
-
-  /*
-  $variables['block_recent_activity'] = _az_content_build_block('recent-activity', [
-    'type' => 'entity-stream',
-    'id' => 'recent-activity',
-    'status' => NODE_PUBLISHED,
-    'title' => 'Recent Activity',
-    'viewMode' => 'teaser',
-    'pageNumItems' => 6,
-    'more' => 'none',
-    'empty' => 'NO DISPLAY',
-  ]);
-  */
 }
 
 /**
@@ -939,11 +835,7 @@ function _az_content_create_dashboard($node, &$variables) {
       'types' => 'UNSET',
       'empty' => 'NO DISPLAY',
     ];
-
-
-
-  }
-  else {
+  } else {
     $snippet = \Drupal::entityManager()->getStorage('node')->load(325);
     $dashboard_block = \Drupal::entityTypeManager() ->getViewBuilder('node') ->view($snippet, 'full');
   }

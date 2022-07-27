@@ -29,7 +29,7 @@ h6 {
 
 h1 {
   color: $color-title;
-  font-size: 205%;
+  font-size: 190%;
   margin: .25em 0 .5em;
   line-height: 1;
   a {
@@ -38,35 +38,36 @@ h1 {
 }
 
 h2 {
-  color : $color-title;
-  font-size: 180%;
+  color: $color-title;
+  font-size: 170%;
   a {
     color: $color-title;
   }
 }
 
 h3 {
-  color : darken($color-title, 10%);
-  font-size: 165%;
+  color: $color-title;
+  font-size: 150%;
+  margin: 1em 0;
   a {
-    color: darken($color-title, 10%);
+    color: $color-title;
   }
 }
 
 h4 {
-  color: tint($color-title, 20%);
-  font-size: 140%;
+  color: $color-title;
+  font-size: 135%;
 }
 
 h5 {
-  color: $color-orange;
+  color: $color-title;
   clear: both;
-  font-size: 130%;
+  font-size: 120%;
 }
 
 h6 {
-  color: tint($color-orange, 30%);
-  font-size: 110%;
+  color: $color-title;
+  font-size: 100%;
 }
 
 p {
