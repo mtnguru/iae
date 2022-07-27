@@ -26,7 +26,7 @@ body.cke_ltr {
     min-height: 225px !important;
     overflow-y: scroll;
   }
-  
+
 }
 
 .entity-embed-dialog {
@@ -193,7 +193,7 @@ article.embedded-entity {
     @include media($bp580only)  { width: 70%; margin: 0 auto !important; float: none; }
     @include media($bp960only)  { width: 50%; }
     @include media($bp1280only) { width: 40%; }
-    @include media($bp1920)     { width: 30%; } 
+    @include media($bp1920)     { width: 30%; }
   }
 
   &.az-view-mode-media-med-large,
@@ -275,4 +275,9 @@ article.embedded-entity {
   .hljs-keyword { color: #96f; }
   .hljs-preprocessor { color: #888; }
 
+}
+
+
+iframe .az-wrapper {
+  display: none;
 }

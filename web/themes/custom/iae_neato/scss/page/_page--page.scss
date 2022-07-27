@@ -1,10 +1,14 @@
 // body.user-login
 
 body {
-  background-color: darken($base-background-color, 5%);
+  background: url('/sites/default/files/lightning.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+
   div.main-wrapper {
-    background-color: $base-background-color;
+//  background-color: $base-background-color;
     main {
+      background-color: darken($base-background-color, 5%);
       @extend %layout-padding;
     }
   }
@@ -24,7 +28,6 @@ body.page-node-type-atomizer {
     }
   }
 }
-
 
 //body.page-node-type-resources,
 body {

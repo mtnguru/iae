@@ -20,10 +20,13 @@
         "drupal/core-composer-scaffold": "^9.4",
         "drupal/core-project-message": "^9.4",
         "drupal/core-recommended": "^9.4",
+        "drupal/devel": "^4.1",
+        "drupal/devel_kint_extras": "^1.0",
         "drupal/entity_browser": "^2.7",
         "drupal/entity_embed": "^1.2",
         "drupal/module_filter": "^3.2",
         "drupal/neato": "^1.9",
+        "drupal/pathauto": "^1.10",
         "drush/drush": "^11.0"
     },
     "conflict": {
