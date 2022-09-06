@@ -1,0 +1,6 @@
+node/node--467.html.twig:        {# <div class="block-welcome block-border">{{ snippet_home_welcome }}</div> #}
+node/node--467.html.twig:        <div class="block-login block-border">{{ snippet_home_login }}</div>
+node/node--467.html.twig:      <div class="snippet-ethereal-matters az-block">
+node/node--467.html.twig:        {{ snippet_home_em }}
+node/node--467.html.twig:      <div class="snippet-announcement">{{ snippet_home_announcement }}</div>
+node/node--467.html.twig:      <div class="snippet-communities">{{ snippet_home_communities }}</div>

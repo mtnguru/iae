@@ -1,0 +1,466 @@
+<?php
+
+/**
+ * @file
+ * Contains az_media.module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Url;
+use Drupal\node\Entity\Node;
+use Drupal\Component\Utility\Random;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().  media
+ */
+function az_media_form_editor_media_dialog_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $storage = $form_state->getStorage();
+
+  /*
+  $display_plugin_options = [
+//  'view_mode:media.embedded'               => "Embedded",
+//  'view_mode:media.media_large'            => "Media - Large",
+//  'view_mode:media.media_large_w_desc'     => "Media - Large w/desc",
+//  'view_mode:media.media_med_large'        => "Media - Med-Large",
+//  'view_mode:media.media_med_large_w_desc' => "Media - Med-Large w/desc",
+//  'view_mode:media.media_medium'           => "Media - Medium",
+//  'view_mode:media.media_medium_w_desc'    => "Media - Medium w/desc",
+//  'view_mode:media.media_small'            => "Media - Small",
+//  'view_mode:media.media_small_w_desc'     => "Media - Small w/desc",
+//  'view_mode:media.media_tiny'             => "Media - Tiny",
+    'embedded'               => "Embedded",
+    'media_large'            => "Media - Large",
+    'media_large_w_desc'     => "Media - Large w/desc",
+    'media_med_large'        => "Media - Med-Large",
+    'media_med_large_w_desc' => "Media - Med-Large w/desc",
+    'media_medium'           => "Media - Medium",
+    'media_medium_w_desc'    => "Media - Medium w/desc",
+    'media_small'            => "Media - Small",
+    'media_small_w_desc'     => "Media - Small w/desc",
+    'media_tiny'             => "Media - Tiny",
+  ];
+
+//$form['attributes']['data-view-mode'] = [
+//$form['attributes']['data-entity-embed-display'] = [
+  $form['attributes']['az-view-mode'] = [
+    '#type' => 'select',
+    '#title' => 'Display as',
+    '#options' => $display_plugin_options,
+    '#default_value' => isset($storage['media_embed_element']['az-view-mode']) ? $storage['media_embed_element']['az-view-mode'] : '',
+//  '#default_value' => isset($storage['media_embed_element']['data-entity-embed-display']) ? $storage['media_embed_element']['data-entity-embed-display'] : '',
+//  '#default_value' => isset($storage['media_embed_element']['data-view-mode']) ? $storage['media_embed_element']['data-view-mode'] : '',
+    '#required' => TRUE,
+//  '#ajax' => [
+//    'callback' => '::updatePluginConfigurationForm',
+//    'wrapper' => 'data-entity-embed-display-settings-wrapper',
+//    'effect' => 'fade',
+//  ],
+    // Hide the selection if only one option is available.
+    '#access' => count($display_plugin_options) > 1,
+  ];
+  */
+
+  $form['attributes']['az-class'] = array(
+    '#title' => 'Classes',
+    '#description' => 'Ex: az-tiny az-small az-medium az-large az-clear',
+    '#type' => 'textfield',
+    '#default_value' => isset($storage['media_embed_element']['az-class']) ? $storage['media_embed_element']['az-class'] : '',
+  );
+
+  // added az data attribute
+  if (\Drupal::currentUser()->hasPermission('atomizer embed atoms')) {
+    $form['az-data'] = array(
+      '#title' => 'Data fields',
+      '#description' => 'Advanced formatting for atomizer only - Ex: zoom=.5',
+      '#type' => 'textfield',
+//    '#default_value' => isset($entity_element['az-data']) ? $entity_element['az-data'] : '',
+    );
+  }
+
+  $form['#validate'][] = 'az_media_form_editor_media_dialog_validate';
+  foreach (array_keys($form['actions']) as $action) {
+    if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+      $form['actions'][$action]['#submit'][] = 'az_media_form_editor_media_dialog_submit';
+    }
+  }
+  return;
+}
+
+function az_media_form_editor_media_dialog_validate(&$form, FormStateInterface &$formState) {
+//if (!empty($formState->errors['field_create_date'])) {
+//  $date = $formState->getValue('field_create_date');
+//}
+  return;
+}
+
+function az_media_form_editor_media_dialog_submit (&$form, FormStateInterface $form_state) {
+//$form_state->setValue(['field_configuration_file', 0, 'value'], $form_state->getValue('field_config'));
+  return;
+}
+
+
+
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function az_media_form_media_image_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['#validate'][] = 'az_media_form_media_image_edit_form_validate';
+}
+
+function az_media_form_media_image_edit_form_validate(&$form, FormStateInterface &$formState) {
+//if (!empty($formState->errors['field_create_date'])) {
+//  $date = $formState->getValue('field_create_date');
+//}
+  return;
+}
+
+
+/**
+ * Implements hook_node_presave().
+ */
+function az_media_node_presave(Node $node) {
+  return;
+}
+
+/**
+ * Implements HOOK_entity_presave().
+ *
+ */
+function az_media_entity_presave(EntityInterface $entity) {
+  return;
+}
+
+/**
+ * Implements HOOK_media_presave().
+ *
+ */
+function az_media_media_presave(EntityInterface $entity) {
+  $bundle = $entity->bundle();
+  switch ($bundle) {
+    case 'image':
+      $fid = $entity->image->getValue()[0]['target_id'];
+      $file = \Drupal\file\Entity\File::load($fid);
+
+      $srcPath = \Drupal::service('file_system')->realpath($file->getFileUri());
+
+      $author = $entity->field_author->value;
+      if (!$author) {
+        $user = \Drupal\user\Entity\user::load(\Drupal::currentUser()->id());
+        $entity->field_author->setValue($user);
+      }
+
+      $create_date = $entity->field_create_date->value;
+      if (!$create_date) {
+        $date = _az_media_getExifField($srcPath, "GPSDateStamp");
+        if ($date) {
+          $time = _az_media_getExifField($srcPath, "GPSTimeStamp");
+          $datetime = $date . " " . $time;
+
+        } else {
+          $datetime = _az_media_getExifField($srcPath, 'DateTimeOriginal');
+          if (!$datetime) {
+            $datetime = date('Y-m-d H:i:s');
+          }
+        }
+        $datetime[4] = '-';
+        $datetime[7] = '-';
+        $datetime[10] = 'T';
+        $entity->field_create_date->setValue($datetime);
+
+//      $given = new \Drupal\Core\Datetime\DrupalDateTime($datetime,$user->getTimezone());
+//      $given->setTimezone(new \DateTimeZone("UTC"));
+//      $udate = $given->format('Y-m-d\Th:i:s');
+//      $entity->field_create_date->setValue($udate);
+      }
+
+      $dimensions = $entity->field_dimensions->value;
+      if (!$dimensions) {
+        $dims = getimagesize($srcPath);
+        $entity->field_dimensions->setValue($dim = $dims[0] . 'x' . $dims[1]);
+      }
+
+      $location = $entity->field_location->value;
+      if (!$location) {
+        $val = 4;
+      }
+
+      $geofield = $entity->field_geofield->value;
+      if (!$geofield) {
+        $lat = _az_media_getExifField($srcPath,'GPSLatitude');
+        $lon = _az_media_getExifField($srcPath,'GPSLongitude');
+        $entity->field_geofield->setValue(($lat &&  $lon) ? 'POINT(' . $lon . ' ' . $lat . ')' : null);
+      }
+
+      break;
+  }
+  return;
+}
+
+/**
+ * Implements HOOK_file_presave().
+ *
+ * Preprocess image: Reduce filesize by resizing image and changing 'quality'
+ * using the convert command from the gd graphics library.
+ *
+ * @param $file
+ */
+function az_media_file_presave($file) {
+  $srcPath = \Drupal::service('file_system')->realpath($file->getFileUri());
+
+  // Don't process if it's an icon or video_thumbnail.
+  if (!$srcPath || strstr($srcPath, 'video_thumbnails') || $file->source == 'icon_file') {
+    return;
+  }
+
+  $info = pathinfo($srcPath);
+  $uinfo = parse_url($file->getFileUri());
+  $basename = $info['basename'];
+  $date = date('Y-m');
+
+  // Get the mime type
+  $shit = 5;
+  if (strstr($file->getMimeType(), 'image')) {
+    $mime = 'image';
+  } else if (strstr($file->getMimeType(), 'application')) {
+    $mime = 'document';
+  } else if (strstr($file->getMimeType(), 'video')) {
+    $mime = 'video';
+  } else {
+    $mime = 'unknown';
+  }
+
+  // ignore the files/atoms files
+  $pos = strpos($info['dirname'], 'files/atoms');
+  if (strpos($info['dirname'], 'files/atoms') == false) {
+    $doc = false;
+
+    // Dont do anything - why is this all commented out.
+    if (strpos($info['dirname'], '/' . $mime . '/') || $doc) {
+      /*
+      $directory = $mime . '/' . $date;
+      if ($doc) {
+        $info['dirname'] = str_replace($date, $directory, $info['dirname']);
+        $file->setFileUri($uinfo['scheme'] . '://' . $directory . '/' . $basename);
+      }
+      else {
+        $info['dirname'] .= '/' . $directory;
+        $file->setFileUri($uinfo['scheme'] . '://' . $directory . '/' . $basename);
+      }
+
+      if (!is_dir($info['dirname'])) {
+        mkdir($info['dirname'], 0777, TRUE);
+      } */
+
+//    if (preg_match('/^(.*)\/default\/files\/(.*)$/', $info['dirname'], $matches)) {
+//      $directory = $matches[2];
+//    } else {
+//      // error message needed here.
+//      $val = 5/0;
+//    }
+//    $tmpPath = file_directory_temp() . '/tmp_' . $basename;
+//    $destPath = $info['dirname'] . '/' . $basename;
+//    if (preg_match('/(.*)_fn_(.*)\./', $info['filename'], $matches)) {
+//      $filename = $matches[1];
+//      $fn = $matches[2];
+//    } else {
+//      $filename = $info['filename'];
+//      $fn = 0;
+//    }
+//    if (file_exists($destPath)) {
+//      while (file_exists($destPath)) {
+//        $newfilename = $filename . '_fn_' . ++$fn . '.' . $info['extension'];
+//        $destPath = $info['dirname'] . '/' . $newfilename;
+//      }
+//      $file->setFileUri($uinfo['scheme'] . '://' . $directory . '/' . $newfilename);
+//    }
+
+      $tmpPath = file_directory_temp() . '/tmp_' . $basename;
+      $destPath = $info['dirname'] . '/' . $basename;
+
+      $cmd = '';
+
+      switch ($mime) {
+        case 'image';
+          if ($info['extension'] != 'png' && $info['extension'] != 'gif') {
+            $initialSize = $file->getSize();
+            $dims = getimagesize($srcPath);
+
+            // Default settings - Reduces 4M cell phone image file to appx 200-500KB.
+            $quality = 50;
+            $resolution = array(
+              'width' => 10000,
+              'height' => 10000,
+            );
+
+            // If image is greater than max resolution in width or height then resize it.
+            $res = ($dims[0] > $resolution['width'] || $dims[1] > $resolution['height'])
+              ? "-resize " . $resolution['width'] . 'x' . $resolution['height']
+              : '';
+
+            // Create and execute gd library convert command to change quality and resolution of image
+            $cmd = "convert $res -quality $quality '$srcPath' '$tmpPath';" .
+              " cp '$tmpPath' '$destPath'; rm '$tmpPath';";
+
+            $finalSize = filesize($destPath);
+            drupal_set_message('File saved: ' . $srcPath . ' -> ' . $destPath .
+              '   Size: ' . $initialSize . ' -> ' . $finalSize);
+          } else {
+            $cmd = "mv $srcPath $destPath;";
+          }
+          break;
+
+          // link files named filename_nn.ext to filename.ext
+        case 'document':
+          // if the file ends with _nn then link to original file to it - sam_12.pdf -> sam.pdf
+          if (preg_match('?(.*)(_\d.*$)?', $info['filename'], $matches)) {
+            if (!empty($matches[2])) {
+              $basepath = $info['dirname'] . '/' . $matches[1] . '.' . $info['extension'];
+              if (file_exists($basepath)) {
+                `rm $basepath`;
+              }
+              $cmd = "ln -s $srcPath $basepath";
+              `$cmd`;
+            }
+          }
+          break;
+      }
+
+      if ($srcPath != $destPath) {  // Remove the source file
+        $cmd .= " rm '$srcPath'";
+      }
+      if ($cmd) {
+        `$cmd`;
+      }
+    }
+  }
+}
+
+/**
+  * Get exif field value.
+  *
+  * @param string $uri
+  *   The uri for the file that we are getting the Exif.
+  *   The name of the exif field.
+  *
+  * @return string|bool
+  *   The value for the requested field or FALSE if is not set.
+  */
+function _az_media_getExifField($uri, $field) {
+  static $exifData;
+
+  if (empty($exifData)) {
+    $exifData = _az_media_getExif($uri);
+  }
+  return !empty($exifData[$field]) ? $exifData[$field] : FALSE;
+}
+
+/**
+ * Read the exif data for an image and put into array.
+ *
+ * @param string $uri
+ *   The uri for the file that we are getting the Exif.
+ *
+ * @return array|bool
+ *   An associative array where the array indexes are the header names and
+ *   the array values are the values associated with those headers or FALSE
+ *   if the data can't be read.
+ */
+function _az_media_getExif($uri) {
+  // exiftool
+  //   -S (short output)
+  //   -n (decimal degrees for lat/long)
+  $cmd = 'exiftool -S -n "' . \Drupal::getContainer()->get('file_system')->realpath($uri) . '"';
+  $pipe = popen($cmd, "r");
+  $d = [];
+  while ($line = fgets($pipe,320)) {
+    $args = explode(': ', $line);
+    switch ($args[0]) {
+      case 'MIMEType':
+      case 'GPSLatitude':
+      case 'GPSLatitudeRef':
+      case 'GPSLongitude':
+      case 'GPSLongitudeRef':
+      case 'GPSDateStamp':
+      case 'GPSTimeStamp':
+      case 'FileSize':
+      case 'ImageWidth':
+      case 'ImageHeight':
+      case 'DateTime':
+      case 'DateTimeOriginal':
+        $d[$args[0]] = chop($args[1]);
+    }
+  }
+  pclose($pipe);
+  if (count($d)) {
+    ksort($d);
+    foreach ($d as $key => $value) {
+      $value = trim(chop($value));
+      print ("Key |$key|   Value |$value|\n");
+    }
+  }
+
+  return $d;
+}
+
+/**
+ * Implements HOOK_preprocess_ENTITY-TYPE().
+ *
+ * @param $variables
+ */
+function az_media_preprocess_media(&$variables) {
+  $media = $variables['media'];
+
+  // Add view mode to class
+
+  if (!empty($variables['#attributes']['az-view-mode'])) {
+    $variables['elements']['class'][] = $variables['#attributes']['az-view-mode'];
+  }
+
+  $variables['attributes']['class'][] = 'az-view-mode-' . str_replace('_', '-', $variables['elements']['#view_mode']);
+
+  if (!empty($variables['attributes']['az-class'])) {
+    $variables['attributes']['class'][] = $variables['attributes']['az-class'];
+  }
+
+  $changed = $media->changed->value;
+  $variables['changed'] = \Drupal::service('date.formatter')->format($changed);
+  $variables['changed_ago'] = \Drupal::service('date.formatter')->formatDiff(
+    $changed, REQUEST_TIME, ['granularity' => 2, 'return_as_object' => TRUE]
+  );
+
+  $variables['state'] = null;
+  if ($media->hasField('moderation_state')) {
+    $variables['state'] = $media->moderation_state->value;
+  }
+  if (!$variables['state']) {
+    $variables['state'] = ($media->status->value) ? 'published' : 'draft';
+  }
+
+  switch ($media->bundle[0]->target_id) {
+    case 'image':
+      break;
+    case 'document':
+      if (!$media->field_document->isEmpty()) {
+        $file = \Drupal\file\Entity\File::load($media->field_document[0]->target_id);
+        $variables['file_url'] = file_create_url($file->getFileUri());
+        $variables['file_name'] = $file->filename->value;
+      } else {
+        $variables['file_name'] = 'No file has been assigned';
+      }
+      break;
+    case 'video':
+      break;
+    case 'twitter':
+      break;
+    case 'instagram':
+      break;
+  }
+
+  return;
+}
+
+function az_media_preprocess_file_link(&$variables) {
+  return;
+}

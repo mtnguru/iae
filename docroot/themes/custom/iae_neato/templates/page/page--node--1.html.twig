@@ -1,0 +1,114 @@
+<div role="document" id="dashboard-document" class="page">
+  <div id="header-background"></div>
+
+  {%  if page.header %}
+    <header id="site-header">
+      {{ page.header }}
+    </header>
+  {% endif %}
+
+  {%  if page.featured %}
+    <section id="featured">
+      <div class="columns">
+        {{ page.featured }}
+      </div>
+    </section>
+  {% endif %}
+
+  {% if page.breadcrumb %}
+    <section id="breadcrumb">
+      <div class="outer-wrapper">
+        {{ page.breadcrumb }}
+      </div>
+    </section>
+  {% endif %}
+
+  <div class="main-wrapper">
+    <main role="main" class="front">
+      <a id="main-content" tabindex="-1"></a>
+      {% if page.sidebar_first %}
+        <aside id="sidebar-first" role="complementary" class="sidebar">
+          {{ page.sidebar_first }}
+        </aside>
+      {% endif %}
+
+      <section id="content">
+        {{ page.content }}
+      </section>
+
+      <section class="section websites">
+        <h3>Web sites</h3>
+        <div class="grid">
+          <div class="card">
+            <h5>Juilliard School of Music</h5>
+            {{ juilliard }}
+          </div>
+          <div class="card">
+            <h5>Energy Central</h5>
+            {{ energycentral }}
+          </div>
+          <div class="card">
+            <h5>Denver International Airport - DIA</h5>
+            {{ dia }}
+          </div>
+          <div class="card">
+            <h5>Denver RTD</h5>
+            {{ rtd }}
+          </div>
+          <div class="card">
+            <h5>Ethereal Matters / Structured Atom</h5>
+            {{ etherealmatters }}
+          </div>
+          <div class="card">
+            <h5>It's All Electric</h5>
+            {{ iae }}
+          </div>
+        </div>
+      </section>
+      <section class="section labtime">
+        <h3>LabTime</h3>
+        <div class="grid">
+          <div class="card">
+            {{ birkeland }}
+          </div>
+        </div>
+      </section>
+
+      <section class="section atomizer">
+        <h3>Atomizer</h3>
+        <div class="grid">
+          <div class="card">
+            <h6>Atom Viewer/Builder</h6>
+
+            <!--iframe width="400" height="300" frameborder="0" allowfullscreen="allowfullscreen" src="http://az/atomizer/atom-viewer-tease"></iframe -->
+
+            <iframe width="400" height="300" frameborder="0" allowfullscreen="allowfullscreen" src="https://etherealmatters.org/atomizer/atom-viewer-tease"></iframe>
+          </div>
+          <div class="card">
+            <h6>Periodic Table</h6>
+            <iframe width="400" height="300" frameborder="0" allowfullscreen="allowfullscreen" src="https://etherealmatters.org/atomizer/pte-tease"></iframe>
+          </div>
+          <div class="card">
+            <h6>Birkeland Current</h6>
+            {{ birkeland }}
+          </div>
+          <div class="card">
+            <h6>Platonic solids</h6>
+            {{ platonic }}
+          </div>
+          <div class="card">
+            <h6>Platonic solid duals</h6>
+            {{ platonicduals }}
+          </div>
+        </div>
+      </section>
+
+
+      {% if page.sidebar_second %}
+        <aside id="sidebar-second" role="complementary" class="sidebar">
+          {{ page.sidebar_second }}
+        </aside>
+      {% endif %}
+    </main>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+name: AZ Media entity image
+description: 'AZ customization of contrib/media_entity_image module.'
+type: module
+package: AZ
+# core_version_requirement: 9.x
+dependencies:
+  - media_entity
+
+test_dependencies:
+  - entity_browser
+
+# Information added by Drupal.org packaging script on 2016-08-02
+version: '9.x-1.2'
+core_version_requirement: '9.x'
+project: 'Az_media_entity_image'
+datestamp: 1470170950

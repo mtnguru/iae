@@ -1,0 +1,58 @@
+@use "sass:math";
+/*
+.field--name-field-paragraphs {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 1rem;
+  row-gap: 1rem;
+  .field--name-field-body {
+    margin-top: 1rem;
+  }
+  iframe {
+    width: 100%;
+  }
+}
+*/
+
+$col_gap: 1rem;
+
+.field--name-field-paragraphs {
+  margin-top: 2rem;
+  display: flex;
+//gap: 10px;
+  flex-wrap: wrap;
+//flex-flow: column wrap;
+  > .field__item {
+    flex-grow: 1;
+    width: 30%;
+    margin: .5rem;
+
+    max-width: calc(33.333% - #{$col_gap});
+  }
+  .field--name-field-body {
+    margin-top: 1rem;
+  }
+  iframe {
+    width: 100%;
+  }
+}
+
+.paragraph {
+  > .field--name-field-title {
+    @extend h3;
+  }
+}
+
+.paragraph--type--card {
+  border: 1px solid #283;
+  padding: 1rem;
+  border-radius: 5px;
+
+  .information ,
+  h3 {
+    display: none;
+    margin: 1rem 0 .5rem;
+  }
+}
+

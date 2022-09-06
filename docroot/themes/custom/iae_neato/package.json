@@ -1,0 +1,24 @@
+{
+  "name": "iae_neato",
+  "version": "8.1.2",
+  "devDependencies": {
+    "browser-sync": "^2.10.0",
+    "gulp-notify": "^4.0.0",
+    "gulp-shell": "^0.8.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^3.0.2",
+    "gulp-util": "^1.0.0",
+    "gulp-watch": "^5.0.1",
+    "rimraf": "*",
+    "run-sequence": "^2.2.1"
+  },
+  "scripts": {
+    "postinstall": "node_modules/.bin/rimraf node_modules/**/*.info && gulp sass && gulp compress"
+  },
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-sass": "^5.1.0",
+    "gulp-sass-glob": "^1.1.0",
+    "sass": "^1.53.0"
+  }
+}

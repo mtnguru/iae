@@ -1,0 +1,23 @@
+# Ignore binaries.
+/bin
+
+# Ignore non-custom parts of Drupal.
+/docroot/core
+/docroot/modules/contrib
+/docroot/profiles/contrib
+/docroot/themes/contrib
+/docroot/sites/default/files
+/docroot/modules/custom/atomizer
+/docroot/modules/custom/imager
+
+# Ignore Composer-managed dependencies.
+/vendor/
+/config/
+
+node_modules/
+bower_components/
+
+.idea/
+services.yml
+*.css.map
+/docroot/mail
