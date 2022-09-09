@@ -1,0 +1,19 @@
+#imager-wrapper {
+
+  #imager-viewer {
+    background-color: #1a2020;
+  }
+  #button-wrapper {
+    background-color: inherit;
+    .imager-buttons {
+      background-color: #aab;
+      margin: 5px 0;
+      border-radius: 4px;
+
+      > div {
+        color: black;
+        margin: 5px 0;
+      }
+    }
+  }
+}

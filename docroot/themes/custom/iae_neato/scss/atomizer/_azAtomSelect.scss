@@ -57,6 +57,10 @@ body#landing_page-atom-builder {
     border-bottom: solid 2px $color-blue;
   }
 
+  .search-wrapper {
+    display: none;
+  }
+
   .sam-enable,
   .pte-enable {
     float: right;
@@ -79,7 +83,7 @@ body#landing_page-atom-builder {
   .select-list {
     width: 100%;
     position: absolute;
-    top: 90px;
+    top: 39px;
     bottom: 0;
     right: 0;
     overflow-y: scroll;

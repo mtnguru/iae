@@ -2,10 +2,12 @@
 
 body {
   div.main-wrapper {
-//  background-color: $base-background-color;
+    background-color: rgba(8,8,16,.85);
+    > .outer-wrapper {
+      margin: 0;
+    }
     main {
-      background-color: rgba(8,8,16,.85);
-      @extend %layout-padding;
+//    @extend %layout-padding;
     }
   }
 }
@@ -94,7 +96,6 @@ body {
   }
 
   article.az-page {
-
     .sidebar-left {
       float: left;
 

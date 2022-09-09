@@ -10,20 +10,21 @@ table {
     font-size: 120%;
     padding: 10px 0;
     color: $color-light-title;
-
   }
 }
 
 th {
-  border-bottom: 1px solid shade($base-border-color, 25%);
+  border-top: 2px solid shade($base-border-color, 25%);
+  border-bottom: 2px solid shade($base-border-color, 25%);
   font-weight: 600;
   padding: $small-spacing 0;
   text-align: left;
 }
 
 td {
-  border-bottom: $base-border;
+  border-bottom: 1px solid shade($base-border-color, 25%);
   padding: $small-spacing 0;
+  text-align: left;
   article {
     p {
       margin: 0;
