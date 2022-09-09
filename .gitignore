@@ -19,5 +19,4 @@ bower_components/
 
 .idea/
 services.yml
-*.css.map
 /docroot/mail

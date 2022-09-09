@@ -1,0 +1,1 @@
+{"version":3,"sources":["views/views.scss"],"names":[],"mappings":"AAGI,qDACE,aACA,gBAKN,aACE","file":"../../views/views.css","sourcesContent":["table.views-table {\n  td.views-field {\n\n    .form-type-checkbox {\n      margin-top: 0;\n      margin-bottom: 0;\n    }\n  }\n}\n\n.view-header {\n  max-width: 960px;\n}\n"]}
