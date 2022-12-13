@@ -72,9 +72,9 @@ body {
 }
 
 $page-padding-mobile: 15px;
-$page-padding-tablet: 15px;
-$page-padding-desktop: 20px;
-$page-padding-widescreen: 60px;
+$page-padding-tablet: 20px;
+$page-padding-desktop: 35px;
+$page-padding-widescreen: 50px;
 
 %layout-padding-mobile {
   @include media($bp320only) {
@@ -111,7 +111,8 @@ $page-padding-widescreen: 60px;
   @extend %layout-padding-widescreen;
 } // %layout-padding
 
+.outer-wrapper,
 .outer-container {
-  @include outer-container;
+  @extend %layout-padding;
 }
 
