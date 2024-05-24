@@ -208,6 +208,7 @@ function az_content_preprocess_comment(&$variables) {
  * @param $variables
  */
 function az_content_preprocess_page(&$variables) {
+/*
   if (property_exists($variables, 'node')) {
     if ($variables['node']->id() == 1) {
       _az_content_create_front($variables['node'], $variables);
@@ -232,6 +233,7 @@ function az_content_preprocess_page(&$variables) {
   if (property_exists($variables, 'node') && $variables['node']->id() == 1) {
     _az_content_create_front($variables['node'], $variables);
   }
+*/
   return;
 }
 

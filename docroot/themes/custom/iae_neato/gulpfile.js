@@ -3,7 +3,6 @@ var gutil = require('gulp-util');
 var sass = require('gulp-sass')(require('sass'))
 // var watch = require('gulp-watch');
 var shell = require('gulp-shell');
-var notify = require('gulp-notify');
 var browserSync = require('browser-sync').create();
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
@@ -31,11 +30,11 @@ loadConfig();
  */
 gulp.task('sass', function () {
   return gulp.src('./scss/**/*.scss')
-    .pipe(notify({
-      title: "Starting SASS Compilation",
-      message: "Starting compilation",
-      onLast: true
-    }))
+//  .pipe(notify({
+//    title: "Starting SASS Compilation",
+//    message: "Starting compilation",
+//    onLast: true
+//  }))
     .pipe(sassGlob())
     .pipe(sourcemaps.init())
     .pipe(sass({
@@ -50,11 +49,11 @@ gulp.task('sass', function () {
     })
     .pipe(sourcemaps.write('./maps'))
     .pipe(gulp.dest('./css'))
-    .pipe(notify({
-      title: "SASS Compiled",
-      message: "All SASS files have been recompiled to CSS.",
-      onLast: true
-    }));
+//  .pipe(notify({
+//    title: "SASS Compiled",
+//    message: "All SASS files have been recompiled to CSS.",
+//    onLast: true
+//  }));
 });
 
 /**
@@ -66,11 +65,11 @@ gulp.task('compress', function() {
     .pipe(uglify())
     .pipe(sourcemaps.write('./maps'))
     .pipe(gulp.dest('./js'))
-    .pipe(notify({
-      title: "JS Minified",
-      message: "All JS files in the theme have been minified.",
-      onLast: true
-    }));
+//  .pipe(notify({
+//    title: "JS Minified",
+//    message: "All JS files in the theme have been minified.",
+//    onLast: true
+//  }));
 });
 
 /**
@@ -85,11 +84,11 @@ gulp.task('drush:cc', function () {
     .pipe(shell([
       config.drush.alias.css_js
     ]))
-    .pipe(notify({
-      title: "Caches cleared",
-      message: "Drupal CSS/JS caches cleared.",
-      onLast: true
-    }));
+//  .pipe(notify({
+//    title: "Caches cleared",
+//    message: "Drupal CSS/JS caches cleared.",
+//    onLast: true
+//  }));
 });
 
 /**
@@ -104,11 +103,11 @@ gulp.task('drush:cr', function () {
     .pipe(shell([
       config.drush.alias.cr
     ]))
-    .pipe(notify({
-      title: "Cache rebuilt",
-      message: "Drupal cache rebuilt.",
-      onLast: true
-    }));
+//  .pipe(notify({
+//    title: "Cache rebuilt",
+//    message: "Drupal cache rebuilt.",
+//    onLast: true
+//  }));
 });
 
 /**
