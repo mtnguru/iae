@@ -2,12 +2,16 @@
 
   .toolbar-box {
     a::before {
-      width: 16px;
+      width: 20px;
     }
   }
 
+  .toolbar-menu {
+    height: 2rem;
+  }
+
   .toolbar-icon {
-    height: 16px;
+    height: 24px;
   }
 
   a {
@@ -18,11 +22,11 @@
 
     > ul > li > ul {
       font-size: 13px;
-      line-height: 1em;
-      padding: 0;
+      line-height: 1.3em;
+      padding: 5px;
 
       a {
-        padding: 4px 1em;
+        padding: 6px 1em;
       }
     }
   }

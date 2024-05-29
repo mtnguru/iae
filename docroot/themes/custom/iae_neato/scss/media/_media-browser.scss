@@ -2,6 +2,7 @@ div.entity-select-dialog.ui-dialog.ui-widget-content {
   overflow: unset;
 }
 
+div.imager-demo-widget-modal.ui-dialog--narrow,
 div.media-library-widget-modal.ui-dialog--narrow {
   width: 94% !important;
   max-width: none;
@@ -11,6 +12,7 @@ div.media-library-widget-modal.ui-dialog--narrow {
   overflow-y: auto;
   .ui-dialog-content {
     padding-top: 20px;
+    ul.imager-demo-menu,
     ul.media-library-menu {
       padding-inline-start: 10px;
       flex-basis: auto;

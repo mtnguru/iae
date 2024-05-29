@@ -1,12 +1,16 @@
+form#views-form-imager-demo-page-1,
+form#views-form-imager-demo-page-2,
 form#views-form-media-library-page-1,
 form#views-form-media-library-page-2 {
 
   $az-item-background: #203060;
+  .imager-demo-views-form__header,
   .media-library-views-form__header {
     display: none;
   }
 
   .views-row {
+    display: inline-block;
     margin: 4px !important;
     border: 1px solid tint($az-item-background, 15%);
     border-radius: 5px;
