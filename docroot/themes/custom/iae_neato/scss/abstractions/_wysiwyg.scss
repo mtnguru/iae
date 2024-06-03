@@ -1,13 +1,23 @@
 // Start content of ckeditor content area and output to screen.
+
+div.text-formatted {
+  .media {
+    .margin: 3rem;
+    &.align-right {
+      margin-left: 2rem;
+    }
+    &.align-left {
+      margin-right: 2rem;
+    }  
+  }
+}
+
 $cke-bg: #cdf;
 
 body.cke_editable {
   padding: .25em 1em;
   background: $color-dark-blue;
 
-}
-body.cke_editable,
-.field--name-field-body {
 }
 
 body.cke_ltr {
@@ -26,7 +36,6 @@ body.cke_ltr {
     min-height: 225px !important;
     overflow-y: scroll;
   }
-
 }
 
 .entity-embed-dialog {
@@ -34,6 +43,7 @@ body.cke_ltr {
     display: none;
   }
 }
+
 .cke_combopanel {
 //width: 150px;
   height: 250px !important;
@@ -67,6 +77,7 @@ body.cke_ltr {
     }
   }
 }
+
 
 .filter-wrapper {
   padding: 0;
@@ -132,6 +143,7 @@ body.cke_ltr {
   h1, h2, h3, h5 {
     clear: both;
   }
+
 
   .az-topic {
     color: $color-topic;
@@ -274,7 +286,6 @@ article.embedded-entity {
   .hljs-comment { color: #3a3; }
   .hljs-keyword { color: #96f; }
   .hljs-preprocessor { color: #888; }
-
 }
 
 
