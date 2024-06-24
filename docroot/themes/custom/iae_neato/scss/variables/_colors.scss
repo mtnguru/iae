@@ -5,9 +5,9 @@ $color-red: #FF5500;
 $color-light-red: #FF7766;
 $color-orange: #FFCC00;
 $color-yellow: #ffff33;
-$color-yellow-green: #E0FF49;
+$color-yellow-green: #bbFF55;
 $color-light-gold: #ffbb22;
-$color-light-green: #B0FFD0;
+$color-light-green: #55cc00;
 $color-green: #7FFFB0;
 $color-dark-green: #063008;
 $color-dark-blue: #062045;
@@ -31,7 +31,7 @@ $color-dark-grey: #666666;
 $color-dim-grey: #999999;
 $color-grey: #BBBBBB !default;
 $color-light-grey: #DDDDDD !default;
-$color-white: #FAF0FF;
+$color-white: #e0f0ea;
 
 
 $color-placeholder: #color-grey;
@@ -48,7 +48,7 @@ $color-user: $color-light-pink;
 //$color-group: #ffaaff;
 $color-group: $color-yellow-green;
 $color-topic: $color-cyan;
-$color-title: $color-light-green;
+$color-title: $color-yellow-green;
 $color-sub-title: $color-light-gold;
 $color-light-title: lighten($color-title, 10%);
 

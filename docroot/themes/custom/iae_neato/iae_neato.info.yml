@@ -3,7 +3,7 @@ type: theme
 description: Custom sub-theme based on the the Neato base theme.
 base theme: neato
 core: 8.x
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^8 || ^9 || ^10
 libraries:
   - iae_neato/global-styling
   - iae_neato/global-scripts
@@ -15,5 +15,5 @@ regions:
   content: Content
   footer_top: 'Footer Top'
   footer_bottom: 'Footer Bottom'
-ckeditor_stylesheets:
+ckeditor5_stylesheets:
   - css/wysiwyg.css

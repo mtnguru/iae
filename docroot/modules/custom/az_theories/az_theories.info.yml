@@ -1,0 +1,8 @@
+name: 'AZ Theories'
+type: module
+description: 'A custom module for preprocessing taxonomy terms.'
+core_version_requirement: ^8 || ^9 || ^10
+package: AZ
+dependencies:
+  - taxonomy
+

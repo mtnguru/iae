@@ -1,0 +1,54 @@
+.view-theories {
+//background: #000;
+  ul {
+  }
+
+  .view-content {
+    column-count: 3;
+    span.field-content a {
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      height: 1.5rem;
+    }
+    > ul:first-of-type {
+      margin-top: 0;
+    }
+    > ul {
+      list-style: none;
+      padding-left: 0;
+      > li {
+        > div > span a {
+          font-style: italic;
+          font-weight: bold;
+          font-size: 130%;
+          color: $color-light-green;
+          padding-bottom: 1.4em;
+        }
+      }
+    }
+    > ul > li ul {
+      list-style: none;
+      padding-left: 1rem;
+      li {
+        a {
+          color: $color-white;
+          font-size: 90%;
+          &.michael {
+            color: #f50;
+          }
+          &.james {
+            color: #b3f;
+          }
+          &.both {
+            color: #3af;
+          }
+        }
+      }
+    }
+    > ul > li > ul > li > ul {
+      list-style: none;
+    }
+  }
+}
