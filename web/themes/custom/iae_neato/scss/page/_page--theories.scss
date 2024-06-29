@@ -1,54 +1,121 @@
 .view-theories {
-//background: #000;
-  ul {
+  &.theories-1 {
+    .view-content {
+      column-count: 1;
+    }
+  }
+  &.theories-2 {
+    .view-content {
+      column-count: 2;
+    }
+  }
+  &.theories-3 {
+    .view-content {
+      column-count: 3;
+    }
+  }
+  &.theories-4 {
+    .view-content {
+      column-count: 4;
+    }
   }
 
   .view-content {
-    column-count: 3;
-    span.field-content a {
+
+    span.field-content {
       display: block;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      height: 1.5rem;
+      height: 1.4em;
     }
-    > ul:first-of-type {
-      margin-top: 0;
+
+
+    /*
+    span a {
+      &.Michael {
+        color: $color-orange;
+      }
+      &.James {
+        color: #f9f;
+      }
+      &.Both {
+        color: #7bf;
+      }
+      &.None {
+        //      color: #3af;
+      }
     }
-    > ul {
+    */
+
+    ul {
       list-style: none;
+    }
+
+    > ul:first-of-type {
+      margin-top: -10px;
+    }
+
+    > ul {
       padding-left: 0;
       > li {
-        > div > span a {
+        > div > span {
           font-style: italic;
           font-weight: bold;
-          font-size: 130%;
+          font-size: 150%;
           color: $color-light-green;
           padding-bottom: 1.4em;
         }
       }
     }
-    > ul > li ul {
+
+    > ul > li > ul {
+      padding-left: 5px;
       list-style: none;
-      padding-left: 1rem;
+      font-size: 90%;
       li {
-        a {
-          color: $color-white;
-          font-size: 90%;
-          &.michael {
-            color: #f50;
+        color: #eee;
+      }
+      ul {
+        padding-left: 15px;
+      }
+      span.field-content {
+        &::before {
+          display: inline-block;
+          color: black;
+          font-family: courier;
+          font-weight: bold;
+          content: 'z';
+          line-height: 1;
+          padding: 1px 2px 0;
+          border-radius: 2px
+        }
+
+        &.Empty {
+          visibility: hidden;
+        }
+
+        &.James {
+          &::before {
+            background-color: $color-purple-red;
+            content: 'J';
           }
-          &.james {
-            color: #b3f;
+        }
+
+        &.Michael {
+          &::before {
+            background-color: $color-light-gold;
+            content: 'M'
           }
-          &.both {
-            color: #3af;
+        }
+
+        &.Both {
+          &::before {
+            background-color: $color-cyan;
+            content: 'B'
           }
         }
       }
-    }
-    > ul > li > ul > li > ul {
-      list-style: none;
     }
   }
 }
