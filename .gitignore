@@ -9,6 +9,7 @@
 /docroot/sites/default/files
 /docroot/modules/custom/atomizer
 /docroot/modules/custom/imager
+/docroot/modules/custom/imager
 
 # Ignore Composer-managed dependencies.
 /vendor/
